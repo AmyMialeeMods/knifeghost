@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "knifeghost",
+  "version": "${version}",
+
+
+  "name": "Knife Ghost",
+  "description": "Beware the Knife Ghost",
+  "authors": [
+    "AmyMialee",
+    "Diansu"
+  ],
+  "contributors": [],
+  "contact": {
+    "email": "knifeghost@amymialee.xyz",
+    "homepage": "https://amymialee.xyz",
+    "irc": "",
+    "sources": "https://github.com/AmyMialeeMods/knifeghost",
+    "issues": "https://github.com/AmyMialeeMods/knifeghost/issues"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/knifeghost/icon.png",
+
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "xyz.amymialee.knifeghost.KnifeGhostClient"
+    ],
+    "main": [
+      "xyz.amymialee.knifeghost.KnifeGhost"
+    ],
+    "server": [],
+    "fabric-datagen": [
+      "xyz.amymialee.knifeghost.KnifeGhostDataGen"
+    ]
+  },
+  "mixins": [
+    "knifeghost.mixins.json"
+  ],
+
+
+  "depends": {
+    "fabric": "*"
+  },
+  "recommends": {
+    "fabric": ">=${fabric_version}",
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": ">${modmenu_version}"
+  },
+  "conflicts": {},
+  "breaks": {},
+
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/knifeghost",
+        "modmenu.discord": "https://discord.amymialee.xyz",
+        "modmenu.kofi": "https://ko-fi.com/amymialee",
+        "modmenu.modrinth": "https://modrinth.com/project/knifeghost",
+        "modmenu.twitter": "https://x.com/amy_mialee",
+        "modmenu.wiki": "https://modrinth.com/project/knifeghost"
+      },
+      "update_checker": true
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "death.attack.knife": "%1$s was stabbed",
+  "death.attack.knife.item": "%1$s was stabbed by %2$s",
+  "death.attack.knife.player": "%1$s was stabbed by %2$s using %3$s",
+  "entity.knifeghost.knife": "Knife",
+  "entity.knifeghost.knife_ghost": "Knife Ghost",
+  "item.knifeghost.knife": "Ghostly Knife",
+  "item.knifeghost.knife_french": "Debonair Balisong",
+  "item.knifeghost.knife_leet": "Kirambit",
+  "item.knifeghost.knife_retro": "Retro Knife",
+  "item.knifeghost.knife_shiny": "Ancient Dagger",
+  "item.knifeghost.knife_tactical": "Tactical Knife",
+  "subtitles.knifeghost.knifeghost.death": "Knife Ghost clatters",
+  "subtitles.knifeghost.knifeghost.hurt": "Knife Ghost rattles",
+  "subtitles.knifeghost.knifeghost.idle": "Knife Ghost jingles",
+  "subtitles.knifeghost.knifeghost.throw": "Knife Ghost chucks"
+}

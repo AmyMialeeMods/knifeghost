@@ -1,0 +1,34 @@
+{
+  "knifeghost.death": {
+    "sounds": [
+      "knifeghost:knifeghost_death1",
+      "knifeghost:knifeghost_death2"
+    ],
+    "subtitle": "subtitles.knifeghost.death"
+  },
+  "knifeghost.hurt": {
+    "sounds": [
+      "knifeghost:knifeghost_hurt1",
+      "knifeghost:knifeghost_hurt2",
+      "knifeghost:knifeghost_hurt3",
+      "knifeghost:knifeghost_hurt4"
+    ],
+    "subtitle": "subtitles.knifeghost.hurt"
+  },
+  "knifeghost.idle": {
+    "sounds": [
+      "knifeghost:knifeghost_idle1",
+      "knifeghost:knifeghost_idle2",
+      "knifeghost:knifeghost_idle3",
+      "knifeghost:knifeghost_idle4"
+    ],
+    "subtitle": "subtitles.knifeghost.idle"
+  },
+  "knifeghost.throw": {
+    "sounds": [
+      "knifeghost:knifeghost_throw1",
+      "knifeghost:knifeghost_throw2"
+    ],
+    "subtitle": "subtitles.knifeghost.throw"
+  }
+}
