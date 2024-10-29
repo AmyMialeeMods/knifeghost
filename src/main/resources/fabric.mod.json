@@ -33,6 +33,9 @@
     "server": [],
     "fabric-datagen": [
       "xyz.amymialee.knifeghost.KnifeGhostDataGen"
+    ],
+    "cardinal-components-entity": [
+      "xyz.amymialee.knifeghost.KnifeGhost"
     ]
   },
   "mixins": [
@@ -56,6 +59,9 @@
 
 
   "custom": {
+    "cardinal-components": [
+      "knifeghost:knives"
+    ],
     "modmenu": {
       "links": {
         "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/knifeghost",

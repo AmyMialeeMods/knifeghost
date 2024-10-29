@@ -1,12 +1,12 @@
 {
-  "knifeghost.death": {
+  "death": {
     "sounds": [
       "knifeghost:knifeghost_death1",
       "knifeghost:knifeghost_death2"
     ],
     "subtitle": "subtitles.knifeghost.death"
   },
-  "knifeghost.hurt": {
+  "hurt": {
     "sounds": [
       "knifeghost:knifeghost_hurt1",
       "knifeghost:knifeghost_hurt2",
@@ -15,7 +15,7 @@
     ],
     "subtitle": "subtitles.knifeghost.hurt"
   },
-  "knifeghost.idle": {
+  "idle": {
     "sounds": [
       "knifeghost:knifeghost_idle1",
       "knifeghost:knifeghost_idle2",
@@ -24,7 +24,7 @@
     ],
     "subtitle": "subtitles.knifeghost.idle"
   },
-  "knifeghost.throw": {
+  "throw": {
     "sounds": [
       "knifeghost:knifeghost_throw1",
       "knifeghost:knifeghost_throw2"

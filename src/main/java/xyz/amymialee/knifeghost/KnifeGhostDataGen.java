@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -14,6 +15,7 @@ import xyz.amymialee.mialib.templates.MDataGen;
 public class KnifeGhostDataGen extends MDataGen {
     @Override
     protected void generateTranslations(@NotNull MLanguageProvider provider, RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.@NotNull TranslationBuilder builder) {
+        builder.add(SpawnEggItem.forEntity(KnifeGhost.KNIFE_GHOST_ENTITY), "Knife Ghost Spawn Egg");
         builder.add(KnifeGhost.KNIFE.getTranslationKey(), "Ghostly Knife");
         builder.add(KnifeGhost.KNIFE_FRENCH.getTranslationKey(), "Debonair Balisong");
         builder.add(KnifeGhost.KNIFE_LEET.getTranslationKey(), "Kirambit");
@@ -81,5 +83,6 @@ public class KnifeGhostDataGen extends MDataGen {
         generator.register(KnifeGhost.KNIFE_RETRO, Models.HANDHELD);
         generator.register(KnifeGhost.KNIFE_SHINY, Models.HANDHELD);
         generator.register(KnifeGhost.KNIFE_TACTICAL, Models.HANDHELD);
+        generator.register(SpawnEggItem.forEntity(KnifeGhost.KNIFE_GHOST_ENTITY), MModelProvider.SPAWN_EGG);
     }
 }

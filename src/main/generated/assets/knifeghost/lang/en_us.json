@@ -6,12 +6,13 @@
   "entity.knifeghost.knife_ghost": "Knife Ghost",
   "item.knifeghost.knife": "Ghostly Knife",
   "item.knifeghost.knife_french": "Debonair Balisong",
+  "item.knifeghost.knife_ghost_spawn_egg": "Knife Ghost Spawn Egg",
   "item.knifeghost.knife_leet": "Kirambit",
   "item.knifeghost.knife_retro": "Retro Knife",
   "item.knifeghost.knife_shiny": "Ancient Dagger",
   "item.knifeghost.knife_tactical": "Tactical Knife",
-  "subtitles.knifeghost.knifeghost.death": "Knife Ghost clatters",
-  "subtitles.knifeghost.knifeghost.hurt": "Knife Ghost rattles",
-  "subtitles.knifeghost.knifeghost.idle": "Knife Ghost jingles",
-  "subtitles.knifeghost.knifeghost.throw": "Knife Ghost chucks"
+  "subtitles.knifeghost.death": "Knife Ghost clatters",
+  "subtitles.knifeghost.hurt": "Knife Ghost rattles",
+  "subtitles.knifeghost.idle": "Knife Ghost jingles",
+  "subtitles.knifeghost.throw": "Knife Ghost chucks"
 }

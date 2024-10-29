@@ -11,17 +11,25 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
+import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import xyz.amymialee.mialib.templates.MToolMaterial;
 
 import java.util.List;
 
 public class KnifeItem extends ToolItem {
-    public KnifeItem(Item.@NotNull Settings settings) {
-        super(ToolMaterials.NETHERITE, settings.component(DataComponentTypes.TOOL, createToolComponent()));
+    private static final MToolMaterial KNIFE = new MToolMaterial().setToolDurability(0).setMiningSpeedMultiplier(9).setAttackDamage(4).setEnchantability(22);
+    private final int colour;
+
+    public KnifeItem(int colour, Item.@NotNull Settings settings) {
+        super(KNIFE, settings.component(DataComponentTypes.TOOL, createToolComponent()));
+        this.colour = colour;
     }
 
     private static @NotNull ToolComponent createToolComponent() {
@@ -50,5 +58,10 @@ public class KnifeItem extends ToolItem {
     @Override
     public void postDamageEntity(@NotNull ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, EquipmentSlot.MAINHAND);
+    }
+
+    @Override
+    public int mialib$getNameColor(ItemStack stack) {
+        return this.colour;
     }
 }

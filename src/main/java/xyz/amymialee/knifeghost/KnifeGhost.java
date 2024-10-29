@@ -1,8 +1,6 @@
 package xyz.amymialee.knifeghost;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.impl.tag.convention.v2.TagRegistration;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.damage.DamageType;
@@ -19,39 +17,45 @@ import net.minecraft.util.math.random.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
+import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
+import xyz.amymialee.knifeghost.cca.KnivesComponent;
 import xyz.amymialee.knifeghost.entity.KnifeEntity;
 import xyz.amymialee.knifeghost.entity.KnifeGhostEntity;
 import xyz.amymialee.knifeghost.item.KnifeItem;
-import xyz.amymialee.knifeghost.network.KnifeGhostSyncPayload;
 import xyz.amymialee.mialib.templates.MRegistry;
 
-public class KnifeGhost implements ModInitializer {
+public class KnifeGhost implements ModInitializer, EntityComponentInitializer {
     public static final String MOD_ID = "knifeghost";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static final MRegistry REGISTRY = new MRegistry(MOD_ID);
 
-    public static final EntityType<KnifeGhostEntity> KNIFE_GHOST_ENTITY = REGISTRY.registerEntity("knife_ghost", EntityType.Builder.create(KnifeGhostEntity::new, SpawnGroup.MONSTER).dimensions(0.6F, 1.8F).maxTrackingRange(16).build(), KnifeGhostEntity.createGhostAttributes());
+    public static final EntityType<KnifeGhostEntity> KNIFE_GHOST_ENTITY = REGISTRY.registerEntity("knife_ghost", EntityType.Builder.create(KnifeGhostEntity::new, SpawnGroup.MONSTER).dimensions(0.6F, 1.8F).maxTrackingRange(16).build(), KnifeGhostEntity.createGhostAttributes(), new MRegistry.EggData(0xAAEFCF, 0x88DFBF));
     public static final EntityType<KnifeEntity> KNIFE_ENTITY = REGISTRY.register("knife", EntityType.Builder.create(KnifeEntity::new, SpawnGroup.MISC).dimensions(0.65f, 0.65f).maxTrackingRange(16).build());
 
     public static final RegistryKey<DamageType> KNIFE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("knife"));
 
-    public static final Item KNIFE = REGISTRY.registerItem("knife", new KnifeItem(new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
-    public static final Item KNIFE_FRENCH = REGISTRY.registerItem("knife_french", new KnifeItem(new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
-    public static final Item KNIFE_LEET = REGISTRY.registerItem("knife_leet", new KnifeItem(new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
-    public static final Item KNIFE_RETRO = REGISTRY.registerItem("knife_retro", new KnifeItem(new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
-    public static final Item KNIFE_SHINY = REGISTRY.registerItem("knife_shiny", new KnifeItem(new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
-    public static final Item KNIFE_TACTICAL = REGISTRY.registerItem("knife_tactical", new KnifeItem(new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
+    public static final Item KNIFE = REGISTRY.registerItem("knife", new KnifeItem(0xA9D1C5, new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
+    public static final Item KNIFE_FRENCH = REGISTRY.registerItem("knife_french", new KnifeItem(0x434343, new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
+    public static final Item KNIFE_LEET = REGISTRY.registerItem("knife_leet", new KnifeItem(0xD14775, new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
+    public static final Item KNIFE_RETRO = REGISTRY.registerItem("knife_retro", new KnifeItem(0x49348E, new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
+    public static final Item KNIFE_SHINY = REGISTRY.registerItem("knife_shiny", new KnifeItem(0x7583FF, new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
+    public static final Item KNIFE_TACTICAL = REGISTRY.registerItem("knife_tactical", new KnifeItem(0x687A4F, new Item.Settings().fireproof().attributeModifiers(KnifeItem.createAttributes()).rarity(Rarity.EPIC)), ItemGroups.TOOLS);
 
     public static final TagKey<Item> KNIVES = TagKey.of(RegistryKeys.ITEM, id("knives"));
 
-    public static final SoundEvent KNIFEGHOST_DEATH = REGISTRY.registerSound("knifeghost.death");
-    public static final SoundEvent KNIFEGHOST_HURT = REGISTRY.registerSound("knifeghost.hurt");
-    public static final SoundEvent KNIFEGHOST_IDLE = REGISTRY.registerSound("knifeghost.idle");
-    public static final SoundEvent KNIFEGHOST_THROW = REGISTRY.registerSound("knifeghost.throw");
+    public static final SoundEvent KNIFEGHOST_DEATH = REGISTRY.registerSound("death");
+    public static final SoundEvent KNIFEGHOST_HURT = REGISTRY.registerSound("hurt");
+    public static final SoundEvent KNIFEGHOST_IDLE = REGISTRY.registerSound("idle");
+    public static final SoundEvent KNIFEGHOST_THROW = REGISTRY.registerSound("throw");
 
     @Override
-    public void onInitialize() {
-        PayloadTypeRegistry.playS2C().register(KnifeGhostSyncPayload.ID, KnifeGhostSyncPayload.CODEC);
+    public void onInitialize() {}
+
+    @Override
+    public void registerEntityComponentFactories(@NotNull EntityComponentFactoryRegistry registry) {
+        registry.beginRegistration(KnifeGhostEntity.class, KnivesComponent.KEY).respawnStrategy(RespawnCopyStrategy.INVENTORY).end(KnivesComponent::new);
     }
 
     public static @NotNull ItemStack getRandomKnife(@NotNull Random random) {
