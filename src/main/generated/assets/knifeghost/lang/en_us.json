@@ -1,4 +1,10 @@
 {
+  "block.knifeghost.ghost_o_lantern": "Ghostly Jack o'Lantern",
+  "block.knifeghost.ghost_pumpkin": "Ghostly Carved Pumpkin",
+  "block.knifeghost.knife_o_lantern": "Sharp Jack o'Lantern",
+  "block.knifeghost.knife_pumpkin": "Knife Carved Pumpkin",
+  "block.knifeghost.sword_o_lantern": "Crooked Jack o'Lantern",
+  "block.knifeghost.sword_pumpkin": "Poorly Carved Pumpkin",
   "death.attack.knife": "%1$s was stabbed",
   "death.attack.knife.item": "%1$s was stabbed by %2$s",
   "death.attack.knife.player": "%1$s was stabbed by %2$s using %3$s",
@@ -11,6 +17,7 @@
   "item.knifeghost.knife_retro": "Retro Knife",
   "item.knifeghost.knife_shiny": "Ancient Dagger",
   "item.knifeghost.knife_tactical": "Tactical Knife",
+  "subtitles.knifeghost.charge": "Knife Ghost charges",
   "subtitles.knifeghost.death": "Knife Ghost clatters",
   "subtitles.knifeghost.hurt": "Knife Ghost rattles",
   "subtitles.knifeghost.idle": "Knife Ghost jingles",

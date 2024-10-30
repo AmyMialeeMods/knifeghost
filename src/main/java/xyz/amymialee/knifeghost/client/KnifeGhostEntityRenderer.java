@@ -28,6 +28,10 @@ public class KnifeGhostEntityRenderer extends MobEntityRenderer<KnifeGhostEntity
         super.render(ghost, f, g, matrixStack, vertexConsumers, i);
         var client = MinecraftClient.getInstance();
         matrixStack.push();
+        var x = MathHelper.lerp(g, ghost.prevX, ghost.getX());
+        var y = MathHelper.lerp(g, ghost.prevY, ghost.getY());
+        var z = MathHelper.lerp(g, ghost.prevZ, ghost.getZ());
+        matrixStack.translate(-x, -y, -z);
         for (var knife = 0; knife < KnifeGhostEntity.KNIFE_COUNT; knife++) {
             if (!ghost.hasKnife(knife)) continue;
             matrixStack.push();

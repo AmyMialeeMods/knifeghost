@@ -1,4 +1,11 @@
 {
+  "charge": {
+    "sounds": [
+      "knifeghost:knifeghost_charge1",
+      "knifeghost:knifeghost_charge3"
+    ],
+    "subtitle": "subtitles.knifeghost.charge"
+  },
   "death": {
     "sounds": [
       "knifeghost:knifeghost_death1",
@@ -21,6 +28,15 @@
       "knifeghost:knifeghost_idle2",
       "knifeghost:knifeghost_idle3",
       "knifeghost:knifeghost_idle4"
+    ],
+    "subtitle": "subtitles.knifeghost.idle"
+  },
+  "impact": {
+    "sounds": [
+      "knifeghost:knifeghost_impact1",
+      "knifeghost:knifeghost_impact2",
+      "knifeghost:knifeghost_impact3",
+      "knifeghost:knifeghost_impact4"
     ],
     "subtitle": "subtitles.knifeghost.idle"
   },

@@ -23,6 +23,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -80,7 +81,7 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
         super(entityType, world);
         this.experiencePoints = 10;
         this.knives = this.getComponent(KnivesComponent.KEY);
-        this.knifeVel = DefaultedList.ofSize(KNIFE_COUNT, this.getPos());
+        this.knifeVel = DefaultedList.ofSize(KNIFE_COUNT, Vec3d.ZERO);
         this.knifePos = DefaultedList.ofSize(KNIFE_COUNT, this.getPos());
         this.knifePrevPos = DefaultedList.ofSize(KNIFE_COUNT, this.getPos());
         this.knifeYaw = DefaultedList.ofSize(KNIFE_COUNT, 0f);
@@ -101,11 +102,17 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
     @Override
     public void shootAt(LivingEntity target, float pullProgress) {
         if (this.getChargingKnife() < 0 || this.getChargingKnife() >= 8) return;
-        var projectile = EntityType.SPECTRAL_ARROW.create(this.getWorld());//KnifeGhost.KNIFE_ENTITY.create(this.getWorld());
+        var projectile = KnifeGhost.KNIFE_ENTITY.create(this.getWorld());
         if (projectile == null) return;
         var pos = this.getKnifePos(this.getChargingKnife(), 0.5f);
         projectile.setPos(pos.x, pos.y, pos.z);
-//        projectile.setStack(knife.copyWithCount(1));
+        var x = target.getX() - this.getX();
+        var y = target.getBodyY(0.35) - projectile.getY();
+        var z = target.getZ() - this.getZ();
+        var dist = Math.sqrt(x * x + z * z);
+        projectile.setStack(this.knives.getKnifeStack(this.getChargingKnife()).copyWithCount(1));
+        projectile.setKnifeId(this.getChargingKnife());
+        projectile.setVelocity(x, y + dist * 0.2F, z, 1.6F, 15 - this.getWorld().getDifficulty().getId() * 5);
         projectile.setVelocity(this, this.getPitch(), this.getYaw(), 0, 1.5F, 5.0F);
         projectile.setOwner(this);
         projectile.velocityDirty = true;
@@ -137,6 +144,9 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
 
     @Environment(EnvType.CLIENT)
     public void clientTick() {
+        if (this.age == 1) {
+            for (var i = 0; i < KNIFE_COUNT; i++) this.knifePos.set(i, this.getPos());
+        }
         var yaw = MathHelper.lerpAngleDegrees(0.5f, this.prevHeadYaw, this.headYaw);
         var count = 0;
         for (var i = 0; i < 8; i++) if (this.hasKnife(i)) count++;
@@ -152,24 +162,27 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
             var curRoll = this.knifeRoll.get(knife);
             var rotation = this.age / 6f + knife * (Math.PI / KNIFE_COUNT * 2);
             var frontage = -Math.cos(rotation + Math.toRadians(yaw));
-            var x = Math.sin(rotation) * 1.45f;
-            var y = 1.35 + frontage * 1.2f + Math.sin(Math.pow(knife + 4, 4) + this.age * 0.3) * 0.08;
-            var z = Math.cos(rotation) * 1.45f;
+            var x = this.getX() + Math.sin(rotation) * 1.45f;
+            var y = this.getY() + 1.35 + frontage * 1.2f + Math.sin(Math.pow(knife + 4, 4) + this.age * 0.3) * 0.08;
+            var z = this.getZ() + Math.cos(rotation) * 1.45f;
             var speed = 0.012f;
             speed = speed * (1 + (8 - count) * 0.1f);
             if (this.isDead()) {
                 x = curPos.getX();
-                y = 0;
+                y = 0.5 + this.getWorld().raycast(new RaycastContext(this.getPos(), this.getPos().subtract(0, 12, 0), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this)).getPos().y;
                 z = curPos.getZ();
-                speed = 0.08f;
+                speed = 0.008f;
             } else if (this.getChargingKnife() == knife) {
                 var look = this.getRotationVector();
-                x = look.x;
-                y = this.getStandingEyeHeight() + look.y;
-                z = look.z;
+                x = this.getX() + look.x;
+                y = this.getEyeY() + look.y;
+                z = this.getZ() + look.z;
                 speed = 0.12f;
             }
-            var newVel = curVel.multiply(0.9f).add(new Vec3d(x - curPos.getX(), y - curPos.getY(), z - curPos.getZ()).multiply(speed));
+            speed += (float) this.getVelocity().horizontalLength() * 0.025f;
+            var newVel = curVel.multiply(0.9f)
+                    .add(new Vec3d(x - curPos.getX(), y - curPos.getY(), z - curPos.getZ()).multiply(speed))
+                    .add(this.getVelocity().multiply(1, 0, 1).multiply(0.2f));
             var newPos = curPos.add(newVel);
             var newYaw = -yaw - 90;
             var newPitch = 0f;
@@ -286,10 +299,21 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
     }
 
     public void setKnife(int id, boolean hasKnife) {
-        this.dataTracker.set(KNIFE_FLAGS, MMath.setByteFlag(this.dataTracker.get(KNIFE_FLAGS), id, hasKnife));
+        int bits = this.dataTracker.get(KNIFE_FLAGS);
+        if (hasKnife) {
+            bits |= 1 << id;
+        } else {
+            bits &= ~(1 << id);
+        }
+        this.dataTracker.set(KNIFE_FLAGS, (byte) bits);
+        if (this.getWorld().isClient) {
+            this.knifeVel.set(id, Vec3d.ZERO);
+            this.knifePos.set(id, this.getPos());
+            this.knifePrevPos.set(id, this.getPos());
+        }
     }
 
-    public int getChargingKnife() {
+    public byte getChargingKnife() {
         return this.dataTracker.get(CHARGING_KNIFE);
     }
 
@@ -359,6 +383,7 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
             if (idSet.isEmpty()) return;
             var id = idSet.get(entity.getRandom().nextInt(idSet.size()));
             entity.setChargingKnife(id);
+            entity.getWorld().playSound(entity, entity.getBlockPos(), KnifeGhost.KNIFEGHOST_CHARGE, entity.getSoundCategory(), 1.0f, 1f + entity.getRandom().nextFloat() * 0.2f);
         }
 
         @Override

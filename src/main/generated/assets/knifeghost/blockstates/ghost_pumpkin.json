@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "knifeghost:block/ghost_pumpkin",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "knifeghost:block/ghost_pumpkin"
+    },
+    "facing=south": {
+      "model": "knifeghost:block/ghost_pumpkin",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "knifeghost:block/ghost_pumpkin",
+      "y": 270
+    }
+  }
+}
