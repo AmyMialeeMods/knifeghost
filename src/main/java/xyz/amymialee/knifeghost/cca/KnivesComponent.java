@@ -24,7 +24,7 @@ public class KnivesComponent implements AutoSyncedComponent {
     public KnivesComponent(KnifeGhostEntity ghost) {
         this.ghost = ghost;
         var list = new ArrayList<>(DefaultedList.ofSize(8, ItemStack.EMPTY));
-        list.replaceAll(ignored -> ghost.getRandom().nextInt(4) != 0 ? KnifeGhost.KNIFE.getDefaultStack() : KnifeGhost.getRandomKnife(ghost.getRandom()));
+        list.replaceAll(ignored -> ghost.getRandom().nextInt(120) != 0 ? KnifeGhost.KNIFE.getDefaultStack() : KnifeGhost.getRandomKnife(ghost.getRandom()));
         this.knives = list;
     }
 
