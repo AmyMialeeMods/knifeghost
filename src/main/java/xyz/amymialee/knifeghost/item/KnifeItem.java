@@ -25,7 +25,7 @@ import xyz.amymialee.mialib.templates.MToolMaterial;
 
 import java.util.List;
 
-public class KnifeItem extends ToolItem {
+public class KnifeItem extends ToolItem implements Equipment {
     private static final MToolMaterial KNIFE = new MToolMaterial().setToolDurability(0).setMiningSpeedMultiplier(9).setAttackDamage(4).setEnchantability(22);
     private final int colour;
 
@@ -91,6 +91,11 @@ public class KnifeItem extends ToolItem {
     @Override
     public void postDamageEntity(@NotNull ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, EquipmentSlot.MAINHAND);
+    }
+
+    @Override
+    public EquipmentSlot getSlotType() {
+        return EquipmentSlot.HEAD;
     }
 
     @Override

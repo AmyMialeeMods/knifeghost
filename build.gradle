@@ -1,14 +1,15 @@
 plugins {
     id 'fabric-loom' version '1.8-SNAPSHOT'
     id 'maven-publish'
+    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
+}
+
+base {
+    archivesName = project.archives_base_name + "-" + project.minecraft_version
 }
 
 version = project.mod_version
 group = project.maven_group
-
-base {
-    archivesName = project.archives_base_name
-}
 
 repositories {
     maven { url "https://maven.terraformersmc.com/" }
@@ -28,6 +29,56 @@ dependencies {
     modImplementation include("net.tslat.smartbrainlib:SmartBrainLib-fabric-${project.minecraft_version}:${project.sbl_version}")
     modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}")
     modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
+}
+
+publishMods {
+    file = remapJar.archiveFile
+    additionalFiles.files.add(remapSourcesJar.archiveFile.get().getAsFile())
+    displayName = "${project.version.toString().split("\\+")[0]} for Fabric $minecraft_version"
+    changelog = new File("CHANGELOG.md").text
+    type = STABLE
+    modLoaders.addAll("fabric", "quilt")
+    dryRun = !providers.gradleProperty("curseforge_api_key").isPresent() || !providers.gradleProperty("modrinth_api_key").isPresent() || !providers.gradleProperty("discord_webhook").isPresent()
+    curseforge {
+        accessToken = providers.gradleProperty('curseforge_api_key')
+        projectId = curseforge_id
+        minecraftVersionRange {
+            start = minecraft_version_range_start
+            end = minecraft_version_range_end
+        }
+        announcementTitle = "Download from CurseForge"
+        javaVersions.addAll(JavaVersion.VERSION_21, JavaVersion.VERSION_22)
+        clientRequired = true;
+        serverRequired = true;
+        projectSlug = curseforge_slug
+        requires("fabric-api")
+        requires("smartbrainlib")
+        embeds("cardinal-components-api")
+    }
+    modrinth {
+        accessToken = providers.gradleProperty("modrinth_api_key")
+        projectId = modrinth_id
+        minecraftVersionRange {
+            start = minecraft_version_range_start
+            end = minecraft_version_range_end
+            includeSnapshots = true
+        }
+        announcementTitle = "Download from Modrinth"
+        requires("fabric-api")
+        requires("smartbrainlib")
+        embeds("cardinal-components-api")
+    }
+    discord {
+        webhookUrl = providers.gradleProperty("discord_webhook")
+        dryRunWebhookUrl = providers.gradleProperty("discord_webhook")
+        username = "Abee"
+        avatarUrl = "https://cdn.discordapp.com/emojis/1006355140657299528.gif?quality=lossless"
+        setPlatforms(publishMods.platforms.modrinth, publishMods.platforms.curseforge)
+    }
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/knifeghost.accesswidener")
 }
 
 fabricApi {
@@ -59,6 +110,8 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
     toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }

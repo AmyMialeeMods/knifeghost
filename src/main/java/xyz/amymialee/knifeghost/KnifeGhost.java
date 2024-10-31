@@ -1,7 +1,10 @@
 package xyz.amymialee.knifeghost;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
+import net.fabricmc.fabric.impl.itemgroup.ItemGroupEventsImpl;
+import net.fabricmc.fabric.mixin.itemgroup.ItemGroupAccessor;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.entity.EntityType;
@@ -89,6 +92,10 @@ public class KnifeGhost implements ModInitializer, EntityComponentInitializer {
         CompostingChanceRegistry.INSTANCE.add(SWORD_PUMPKIN, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(GHOST_PUMPKIN, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(KNIFE_PUMPKIN, 0.65F);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register((group) -> {
+            var spawnEggItem = SpawnEggItem.forEntity(KNIFE_GHOST_ENTITY);
+            if (spawnEggItem != null) group.add(spawnEggItem);
+        });
     }
 
     @Override

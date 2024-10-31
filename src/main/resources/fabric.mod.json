@@ -5,7 +5,7 @@
 
 
   "name": "Knife Ghost",
-  "description": "Beware the Knife Ghost",
+  "description": "Beware the Knife Ghost!",
   "authors": [
     "AmyMialee",
     "Diansu"
@@ -22,6 +22,7 @@
   "icon": "assets/knifeghost/icon.png",
 
 
+  "accessWidener": "knifeghost.accesswidener",
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -30,7 +31,6 @@
     "main": [
       "xyz.amymialee.knifeghost.KnifeGhost"
     ],
-    "server": [],
     "fabric-datagen": [
       "xyz.amymialee.knifeghost.KnifeGhostDataGen"
     ],

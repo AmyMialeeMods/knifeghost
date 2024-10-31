@@ -109,10 +109,9 @@ public class KnifeGhostEntity extends HostileEntity implements SmartBrainOwner<K
         var x = target.getX() - this.getX();
         var y = target.getBodyY(0.35) - projectile.getY();
         var z = target.getZ() - this.getZ();
-        var dist = Math.sqrt(x * x + z * z);
         projectile.setStack(this.knives.getKnifeStack(this.getChargingKnife()).copyWithCount(1));
         projectile.setKnifeId(this.getChargingKnife());
-        projectile.setVelocity(x, y + dist * 0.2F, z, 1.6F, 15 - this.getWorld().getDifficulty().getId() * 5);
+        projectile.setVelocity(x, y, z, 1.6F, 15 - this.getWorld().getDifficulty().getId() * 5);
         projectile.setVelocity(this, this.getPitch(), this.getYaw(), 0, 1.5F, 5.0F);
         projectile.setOwner(this);
         projectile.velocityDirty = true;

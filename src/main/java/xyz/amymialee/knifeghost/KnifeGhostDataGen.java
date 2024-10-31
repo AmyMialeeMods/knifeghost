@@ -17,12 +17,16 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import xyz.amymialee.mialib.templates.MDataGen;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class KnifeGhostDataGen extends MDataGen {
+    public static final Model HANDHELD_KNIFE = new Model(Optional.of(KnifeGhost.id("item/handheld_knife")), Optional.empty(), TextureKey.LAYER0);
+
     @Override
     protected void generateTranslations(@NotNull MLanguageProvider provider, RegistryWrapper.WrapperLookup registryLookup, FabricLanguageProvider.@NotNull TranslationBuilder builder) {
         builder.add(SpawnEggItem.forEntity(KnifeGhost.KNIFE_GHOST_ENTITY), "Knife Ghost Spawn Egg");
@@ -126,12 +130,12 @@ public class KnifeGhostDataGen extends MDataGen {
 
     @Override
     protected void generateItemModels(MModelProvider provider, @NotNull ItemModelGenerator generator) {
-        generator.register(KnifeGhost.KNIFE, Models.HANDHELD);
-        generator.register(KnifeGhost.KNIFE_FRENCH, Models.HANDHELD);
-        generator.register(KnifeGhost.KNIFE_LEET, Models.HANDHELD);
-        generator.register(KnifeGhost.KNIFE_RETRO, Models.HANDHELD);
-        generator.register(KnifeGhost.KNIFE_SHINY, Models.HANDHELD);
-        generator.register(KnifeGhost.KNIFE_TACTICAL, Models.HANDHELD);
+        generator.register(KnifeGhost.KNIFE, HANDHELD_KNIFE);
+        generator.register(KnifeGhost.KNIFE_FRENCH, HANDHELD_KNIFE);
+        generator.register(KnifeGhost.KNIFE_LEET, HANDHELD_KNIFE);
+        generator.register(KnifeGhost.KNIFE_RETRO, HANDHELD_KNIFE);
+        generator.register(KnifeGhost.KNIFE_SHINY, HANDHELD_KNIFE);
+        generator.register(KnifeGhost.KNIFE_TACTICAL, HANDHELD_KNIFE);
         generator.register(SpawnEggItem.forEntity(KnifeGhost.KNIFE_GHOST_ENTITY), MModelProvider.SPAWN_EGG);
     }
 

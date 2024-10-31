@@ -36,17 +36,10 @@ public class KnifeEntityRenderer extends EntityRenderer<KnifeEntity> {
                 matrices.scale((float) dist, (float) dist, (float) dist);
             }
         }
-//        var stick = knife.getLifetime();
-//        if (stick >= 0 && stick <= 6) {
-//            var dist = Math.max(0, (stick - tickDelta) / 6f);
-//            var look = knife.getRotationVector().multiply(knife.getWidth(), knife.getHeight(), knife.getWidth());
-//            matrices.translate(-look.x, -look.y, look.z);
-//            matrices.scale(dist, dist, dist);
-//            matrices.translate(look.x, look.y, -look.z);
-//        }
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-MathHelper.lerp(tickDelta, knife.prevPitch, knife.getPitch())));
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90 + MathHelper.lerp(tickDelta, knife.prevYaw, knife.getYaw())));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(MathHelper.lerp(tickDelta, knife.prevRoll, knife.roll)));
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-45 + MathHelper.lerp(tickDelta, knife.prevPitch, knife.getPitch())));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-45));
         this.itemRenderer.renderItem(knife.getStack(), ModelTransformationMode.FIXED, 255, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, knife.getWorld(), knife.getId());
         matrices.pop();
         super.render(knife, yaw, tickDelta, matrices, vertexConsumers, light);

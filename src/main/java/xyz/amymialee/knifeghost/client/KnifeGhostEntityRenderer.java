@@ -25,7 +25,11 @@ public class KnifeGhostEntityRenderer extends MobEntityRenderer<KnifeGhostEntity
 
     @Override
     public void render(KnifeGhostEntity ghost, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, int i) {
-        super.render(ghost, f, g, matrixStack, vertexConsumers, i);
+        if (KnifeGhostClient.isLast) {
+            super.render(ghost, f, g, matrixStack, vertexConsumers, i);
+            return;
+        }
+        KnifeGhostClient.GHOST_RENDERS.add(ghost);
         var client = MinecraftClient.getInstance();
         matrixStack.push();
         var x = MathHelper.lerp(g, ghost.prevX, ghost.getX());
@@ -51,22 +55,11 @@ public class KnifeGhostEntityRenderer extends MobEntityRenderer<KnifeGhostEntity
             matrixStack.pop();
         }
         matrixStack.pop();
-
-//        var age = ghost.age + g;
-//        for (var knife = 0; knife < KnifeGhostEntity.KNIFE_COUNT; knife++) {
-//            matrixStack.push();
-//            matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(90));
-//            matrixStack.translate(x, 1.35 + frontage / 2 + Math.sin(Math.pow(knife + 4, 4) + age * 0.3) * 0.08, z);
-//            matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(yaw));
-//            matrixStack.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(-22.5f));
-//            client.getItemRenderer().renderItem(ghost.knives.getKnifeStack(knife), ModelTransformationMode.FIXED, 255, OverlayTexture.DEFAULT_UV, matrixStack, vertexConsumers, ghost.getWorld(), ghost.getId());
-//            matrixStack.pop();
-//        }
     }
 
     @Override
     protected @Nullable RenderLayer getRenderLayer(KnifeGhostEntity entity, boolean showBody, boolean translucent, boolean showOutline) {
-        return RenderLayer.getEntityTranslucentCull(this.getTexture(entity));
+        return KnifeGhostRenderType.KNIFEGHOST.apply(this.getTexture(entity));
     }
 
     @Override

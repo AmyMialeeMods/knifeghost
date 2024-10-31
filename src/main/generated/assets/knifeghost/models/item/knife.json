@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "knifeghost:item/handheld_knife",
   "textures": {
     "layer0": "knifeghost:item/knife"
   }

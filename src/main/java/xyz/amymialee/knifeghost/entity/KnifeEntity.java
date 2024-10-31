@@ -122,9 +122,18 @@ public class KnifeEntity extends ProjectileEntity {
         this.prevRoll = this.roll;
         if (!this.isStuck()) {
             if (this.isReturning()) {
-                this.roll = MathHelper.wrapDegrees(MathHelper.lerp(0.1F, this.roll, 0.0F));
+                this.roll = MathHelper.lerp(0.1F, this.roll, 0.0F);
             } else {
-                this.roll = MathHelper.wrapDegrees(this.roll - 40.0F);
+                this.roll = this.roll - 40.0F;
+            }
+            var f = this.roll % 360.0F;
+            if (f >= 180.0F) {
+                this.roll -= 360.0F;
+                this.prevRoll -= 360.0F;
+            }
+            if (f < -180.0F) {
+                this.roll += 360.0F;
+                this.prevRoll += 360.0F;
             }
         }
         var owner = this.getOwner();
@@ -181,7 +190,7 @@ public class KnifeEntity extends ProjectileEntity {
         }
     }
 
-    @Override
+    @Override @SuppressWarnings("SuspiciousNameCombination")
     protected void updateRotation() {
         if (!this.isReturning()) {
             super.updateRotation();

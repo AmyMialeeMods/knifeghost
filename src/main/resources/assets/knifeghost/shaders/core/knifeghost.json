@@ -1,6 +1,6 @@
 {
-    "vertex": "knife_ghost",
-    "fragment": "knife_ghost",
+    "vertex": "knifeghost:knifeghost",
+    "fragment": "knifeghost:knifeghost",
     "samplers": [
         { "name": "Sampler0" },
         { "name": "Sampler2" }
