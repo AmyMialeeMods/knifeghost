@@ -40,7 +40,6 @@ public class KnifeGhostClient implements ClientModInitializer {
         CoreShaderRegistrationCallback.EVENT.register((callback) -> callback.register(KnifeGhost.id(KnifeGhost.MOD_ID), VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, KnifeGhostRenderType::loadShader));
         WorldRenderEvents.LAST.register((context) -> {
             isLast = true;
-
             rendering: {
                 var camera = context.camera();
                 if (camera == null) break rendering;
