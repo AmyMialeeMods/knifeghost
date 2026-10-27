@@ -47,10 +47,10 @@ public class KnifeGhostDataGen extends MDataGen {
         builder.add(KnifeGhost.KNIFE_GHOST_ENTITY.getTranslationKey(), "Knife Ghost");
         builder.add(KnifeGhost.KNIFE_ENTITY.getTranslationKey(), "Knife");
 
-        var knifeKeys = provider.getDamageKeys(KnifeGhost.KNIFE_DAMAGE.getValue());
-        builder.add(knifeKeys[0], "%1$s was stabbed");
-        builder.add(knifeKeys[1], "%1$s was stabbed by %2$s");
-        builder.add(knifeKeys[2], "%1$s was stabbed by %2$s using %3$s");
+        var knifeKey = "death.attack." + KnifeGhost.KNIFE_DAMAGE.getValue().toTranslationKey();
+        builder.add(knifeKey, "%1$s was stabbed");
+        builder.add(knifeKey + ".player", "%1$s was stabbed by %2$s");
+        builder.add(knifeKey + ".item", "%1$s was stabbed by %2$s using %3$s");
 
         builder.add(provider.getSubtitleKey(KnifeGhost.KNIFEGHOST_CHARGE), "Knife Ghost charges");
         builder.add(provider.getSubtitleKey(KnifeGhost.KNIFEGHOST_DEATH), "Knife Ghost clatters");
